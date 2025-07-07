@@ -22,6 +22,7 @@ import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 import ai.onnxruntime.OrtException;
@@ -101,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void execute(Bitmap origImage) {
+        List<String> labels = Arrays.asList("person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "couch", "potted plant", "bed", "dining table", "toilet", "tv", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush");
+
         if (damoyolo == null) {
             byte[] modelBytes;
             try {
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             List<DAMOYOLO.Detection> detectionList = damoyolo.run(origImage, 0.4f, 0.45f);
-            Bitmap drawed = DAMOYOLO.drawDetections(origImage, detectionList);
+            Bitmap drawed = DAMOYOLO.drawDetections(origImage, detectionList, labels);
 
             new Handler(Looper.getMainLooper()).post(() -> {
                 ImageView imageView = findViewById(R.id.imageView);

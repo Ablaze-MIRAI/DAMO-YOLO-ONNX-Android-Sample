@@ -148,7 +148,7 @@ public class DAMOYOLO {
         return inter / (areaA + areaB - inter);
     }
 
-    public static Bitmap drawDetections(Bitmap bitmap, List<Detection> detections/*, List<String> labels*/) {
+    public static Bitmap drawDetections(Bitmap bitmap, List<Detection> detections, List<String> labels) {
         Bitmap mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
         Canvas canvas = new Canvas(mutable);
@@ -165,7 +165,7 @@ public class DAMOYOLO {
         for (Detection detection : detections) {
             canvas.drawRect(new RectF(detection.x1, detection.y1, detection.x2, detection.y2), paint);
 
-            String label = String.valueOf(detection.classId) + String.format(": %.2f", detection.score);
+            String label = labels.get(detection.classId) + String.format(": %.2f", detection.score);
             canvas.drawText(label, detection.x1, detection.y1 - 10, textPaint);
         }
 
